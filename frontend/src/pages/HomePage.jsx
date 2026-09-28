@@ -17,9 +17,12 @@ export default function HomePage() {
 
   return (
     <>
-      {/* HERO SECTION WITH INDUSTRIAL ATMOSPHERE */}
+      {/* HERO SECTION WITH CINEMATIC INDUSTRIAL VIDEO BACKGROUND */}
       <section className="relative overflow-hidden border-b border-white/10 bg-[#08101d] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.18),transparent_50%),url('/legacy-assets/images/industrial-bg.jpg')] bg-cover bg-center opacity-25 mix-blend-luminosity" />
+        {/* CINEMATIC INDUSTRIAL BACKGROUND IMAGE / OVERLAY */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.25),transparent_60%),url('/legacy-assets/images/hero.png')] bg-cover bg-center opacity-30 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#08101d]/80 via-transparent to-[#08101d]" />
+
         <div className="shell relative py-16 sm:py-20 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <span className="eyebrow">{homeContent.hero.eyebrow}</span>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import PageHero from "../components/sections/PageHero";
 import SectionHeading from "../components/sections/SectionHeading";
 import { servicesContent, homeContent } from "../data/siteContent";
+import TimeSeriesVisualization from "../components/visualizations/TimeSeriesVisualization";
+import OTNetworkDiagram from "../components/visualizations/OTNetworkDiagram";
 
 export default function ServicesPage() {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -11,7 +13,7 @@ export default function ServicesPage() {
 
   return (
     <>
-      <PageHero {...servicesContent.hero} dark />
+      <PageHero {...servicesContent.hero} bgImage="/legacy-assets/images/pi-system.jpg" />
 
       {/* 2-COLUMN INTERACTIVE SERVICE SHOWCASE (SOLVES GAP ISSUE) */}
       <section className="section-space">
@@ -211,5 +213,6 @@ export default function ServicesPage() {
     </>
   );
 }
+
 
 

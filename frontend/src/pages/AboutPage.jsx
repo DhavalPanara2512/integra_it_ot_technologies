@@ -5,11 +5,12 @@ import { aboutContent } from "../data/siteContent";
 export default function AboutPage() {
   return (
     <>
-      <PageHero {...aboutContent.hero} dark />
+      <PageHero {...aboutContent.hero} bgImage="/legacy-assets/images/about-banner.jpg" />
 
-      {/* OVERVIEW SECTION */}
-      <section className="section-space">
-        <div className="shell grid gap-8 lg:grid-cols-2 lg:items-stretch">
+      {/* OVERVIEW SECTION WITH REALISTIC CONNECTED CONTROL ROOM BACKDROP */}
+      <section className="section-space relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(14,165,233,0.15),transparent_60%),url('/legacy-assets/images/about-banner.jpg')] bg-cover bg-center opacity-15 mix-blend-luminosity pointer-events-none" />
+        <div className="shell grid gap-8 lg:grid-cols-2 lg:items-stretch relative z-10">
           <div className="panel bg-[#0e1726]/80 border border-white/10 p-6 sm:p-8 flex flex-col justify-between space-y-5">
             <SectionHeading eyebrow={aboutContent.overview.eyebrow} title={aboutContent.overview.title} />
             <div className="space-y-4 text-xs sm:text-sm leading-7 text-slate-300">

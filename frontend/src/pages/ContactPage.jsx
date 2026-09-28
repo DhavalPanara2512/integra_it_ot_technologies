@@ -30,7 +30,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageHero {...contactContent.hero} dark />
+      <PageHero {...contactContent.hero} bgImage="/legacy-assets/images/company-bg.jpg" />
 
       <section className="section-space">
         <div className="shell grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">

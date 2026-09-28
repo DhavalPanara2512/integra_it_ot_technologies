@@ -6,7 +6,7 @@ import { industriesContent } from "../data/siteContent";
 export default function IndustriesPage() {
   return (
     <>
-      <PageHero {...industriesContent.hero} dark />
+      <PageHero {...industriesContent.hero} bgImage="/legacy-assets/images/power.jpg" />
 
       <section className="section-space">
         <div className="shell">
