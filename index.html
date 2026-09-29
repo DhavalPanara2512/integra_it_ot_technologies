@@ -99,7 +99,7 @@ nav a.active::after{
    HERO
    ========================================================================== */
 .hero{
-    padding: 168px 6% 100px;
+    padding: 140px 6% 70px;
     background: var(--deep);
     background-image: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(30,127,214,0.22) 0%, transparent 70%);
     position: relative;
@@ -116,6 +116,13 @@ nav a.active::after{
     pointer-events:none;
 }
 .hero-inner{ position:relative; z-index:2; max-width: 1180px; margin:0 auto; }
+.hero-grid{
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 48px;
+}
 .hero-top{ max-width: 720px; }
 .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
@@ -127,7 +134,7 @@ nav a.active::after{
 .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--amber); }
 .hero h1{
     font-family: var(--font-display);
-    font-size: clamp(32px, 4.6vw, 54px);
+    font-size: clamp(32px, 4.2vw, 52px);
     font-weight:700; line-height:1.12; letter-spacing:-0.01em;
     margin-bottom:20px;
 }
@@ -135,15 +142,90 @@ nav a.active::after{
 .hero p{
     font-size:16.5px; color: rgba(255,255,255,0.62); max-width:560px; margin-bottom:32px;
 }
-.hero-btn-group{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 56px; }
+.hero-btn-group{ display:flex; gap:14px; flex-wrap:wrap; }
 .btn{
     padding:13px 26px; border-radius:7px; font-size:14.5px; font-weight:600;
-    transition: all .2s ease; display:inline-block;
+    transition: all .25s cubic-bezier(0.16, 1, 0.3, 1); display:inline-block;
 }
-.btn-primary{ background: var(--signal); color:#fff; }
-.btn-primary:hover{ background:#1a6fbb; transform: translateY(-1px); }
+.btn-primary{ background: var(--signal); color:#fff; box-shadow: 0 4px 14px rgba(30,127,214,0.35); }
+.btn-primary:hover{ background:#1a6fbb; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,127,214,0.5); }
 .btn-outline{ background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.22); }
-.btn-outline:hover{ border-color: rgba(255,255,255,0.5); }
+.btn-outline:hover{ border-color: rgba(255,255,255,0.6); transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+/* HERO RIGHT - INDUSTRIAL FOCUS BADGE CONTAINER */
+.hero-focus-box{
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 28px 24px;
+    color: var(--ink);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-focus-box:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(30, 127, 214, 0.22);
+}
+.hero-focus-header{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--signal);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.hero-focus-header .live-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    background: rgba(30, 127, 214, 0.08);
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--signal);
+}
+.hero-focus-header .live-badge i{
+    width: 6px; height: 6px; border-radius: 50%; background: #3ed598;
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+.hero-focus-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.focus-pill{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.focus-pill:hover{
+    background: #fff;
+    border-color: var(--signal);
+    color: var(--signal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 127, 214, 0.1);
+}
+.focus-pill .pill-dot{
+    width: 8px; height: 8px; border-radius: 50%; background: var(--signal); flex-shrink: 0;
+}
+.focus-pill:nth-child(even) .pill-dot{ background: var(--amber); }
+
+@media(max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; gap: 32px; }
+}
 
 /* pipeline schematic - Data stream logic aligned center-to-center */
 .pipeline{
@@ -287,8 +369,8 @@ nav a.active::after{
 /* ==========================================================================
    SECTION SHELLS
    ========================================================================== */
-.section{ padding: 90px 6%; }
-.section-head{ max-width: 620px; margin: 0 auto 48px; text-align:center; }
+.section{ padding: 60px 6%; }
+.section-head{ max-width: 620px; margin: 0 auto 36px; text-align:center; }
 .section-eyebrow{
     font-family: var(--font-mono); font-size:11.5px; font-weight:600; letter-spacing:0.1em;
     text-transform:uppercase; color: var(--signal); margin-bottom:12px;
@@ -299,20 +381,26 @@ nav a.active::after{
 }
 .section-head p{ color: var(--mist); font-size:15px; }
 
-.cards{ display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:24px; max-width:1180px; margin:0 auto; }
+.cards{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px; max-width:1180px; margin:0 auto; }
 .card{
     background:#fff; border:1px solid var(--line); border-radius: var(--radius);
-    overflow: hidden; text-align:left; transition: border-color .2s ease, transform .2s ease;
+    overflow: hidden; text-align:left;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    box-shadow: 0 4px 12px rgba(13, 20, 32, 0.03);
 }
-/* Gradient top accent line — matches About page's val-card hover treatment */
+/* Gradient top accent line */
 .card::before{
     content:''; position:absolute; top:0; left:0; right:0; height:3px;
     background: linear-gradient(90deg, var(--signal), var(--amber));
     transform: scaleX(0); transform-origin:left; transition: transform .3s ease;
     z-index: 2;
 }
-.card:hover{ border-color: rgba(30,127,214,0.3); transform: translateY(-2px); }
+.card:hover{
+    border-color: rgba(30,127,214,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(13, 20, 32, 0.08);
+}
 .card:hover::before{ transform: scaleX(1); }
 .card .card-media{
     position: relative; height:150px; width:100%;
@@ -539,13 +627,29 @@ footer a {
 
 <section class="hero">
     <div class="hero-inner">
-        <div class="hero-top">
-            <div class="eyebrow"><span class="dot"></span>Enterprise OT &amp; Industrial Data</div>
-            <h1>Turn raw plant data into <em>real‑time intelligence</em></h1>
-            <p>We bridge process operations and enterprise analytics from edge connectivity and AVEVA&nbsp;PI&nbsp;System optimization to advanced data engineering  to unlock operational excellence.</p>
-            <div class="hero-btn-group">
-                <a href="services.html" class="btn btn-primary">Explore Solutions</a>
-                <a href="contact.html" class="btn btn-outline">Contact Us</a>
+        <div class="hero-grid">
+            <div class="hero-top">
+                <div class="eyebrow"><span class="dot"></span>Enterprise OT &amp; Industrial Data</div>
+                <h1>Turn raw plant data into <em>real‑time intelligence</em></h1>
+                <p>We bridge process operations and enterprise analytics from edge connectivity and AVEVA&nbsp;PI&nbsp;System optimization to advanced data engineering  to unlock operational excellence.</p>
+                <div class="hero-btn-group">
+                    <a href="services.html" class="btn btn-primary">Explore Solutions</a>
+                    <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="hero-focus-box">
+                <div class="hero-focus-header">
+                    Industrial Focus
+                    <span class="live-badge"><i></i> Active Engine</span>
+                </div>
+                <div class="hero-focus-grid">
+                    <div class="focus-pill"><span class="pill-dot"></span> Industrial Automation</div>
+                    <div class="focus-pill"><span class="pill-dot"></span> AVEVA PI System</div>
+                    <div class="focus-pill"><span class="pill-dot"></span> SCADA &amp; HMI</div>
+                    <div class="focus-pill"><span class="pill-dot"></span> Power BI</div>
+                    <div class="focus-pill" style="grid-column: span 2;"><span class="pill-dot"></span> OT Cybersecurity</div>
+                </div>
             </div>
         </div>
 
@@ -577,7 +681,7 @@ footer a {
     <div class="section-head">
         <div class="section-eyebrow">What We Do</div>
         <h2>Services</h2>
-        <p>End-to-end IT & OT engineering—from secure infrastructure and industrial connectivity to enterprise analytics and digital transformation.</p>
+        <p>End-to-end IT & OT engineering from secure infrastructure and industrial connectivity to enterprise analytics and digital transformation.</p>
     </div>
     <div class="cards">
         <div class="card">

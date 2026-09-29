@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { homeContent } from "../data/siteContent";
 import DataFlow from "../components/sections/DataFlow";
 import SectionHeading from "../components/sections/SectionHeading";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 const purdueLevels = [
   { id: 0, level: "LEVEL 0", name: "Field Sensors & Actuators", tech: "Temperature, Pressure, Flow Meters, Vibration Transmitters", focus: "Process Sensing" },
@@ -13,139 +14,151 @@ const purdueLevels = [
 ];
 
 export default function HomePage() {
-  const [activeLevel, setActiveLevel] = useState(3);
+  const [activeLevel, setActiveLevel] = useState(0);
+
+  const [heroRef, heroVisible] = useScrollReveal({ threshold: 0.05 });
+  const [heroVisualRef, heroVisualVisible] = useScrollReveal({ threshold: 0.1 });
+  const [servicesRef, servicesVisible] = useScrollReveal({ threshold: 0.1 });
+  const [industriesRef, industriesVisible] = useScrollReveal({ threshold: 0.1 });
+  const [partnerRef, partnerVisible] = useScrollReveal({ threshold: 0.1 });
+  const [ctaRef, ctaVisible] = useScrollReveal({ threshold: 0.2 });
 
   return (
     <>
-      {/* HERO SECTION WITH CINEMATIC INDUSTRIAL VIDEO BACKGROUND */}
+      {/* 2. HERO SECTION — CINEMATIC MULTI-STAGE MASK REVEAL */}
       <section className="relative overflow-hidden border-b border-white/10 bg-[#08101d] text-white">
-        {/* CINEMATIC INDUSTRIAL BACKGROUND IMAGE / OVERLAY */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.25),transparent_60%),url('/legacy-assets/images/hero.png')] bg-cover bg-center opacity-30 mix-blend-luminosity" />
+        {/* Subtle Parallax Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.25),transparent_60%),url('/legacy-assets/images/hero.png')] bg-cover bg-center opacity-30 mix-blend-luminosity transition-transform duration-1000 ease-out hover:scale-105" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#08101d]/80 via-transparent to-[#08101d]" />
 
-        <div className="shell relative py-16 sm:py-20 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="eyebrow">{homeContent.hero.eyebrow}</span>
+        <div ref={heroRef} className="shell py-16 sm:py-20 flex justify-start">
+          <div className="space-y-6 max-w-4xl text-left">
+            {/* STEP 1: Eyebrow with letter spacing transition */}
+            <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              <span className="eyebrow tracking-[0.25em]">{homeContent.hero.eyebrow}</span>
+            </div>
+
+            {/* STEP 2: Line-by-line masked typography reveal */}
             <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15] text-white">
-              Turn raw plant data into <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-integra-orange">real-time intelligence</span>
+              <span className="block overflow-hidden py-0.5">
+                <span className={`block transition-all duration-1000 delay-100 ${
+                  heroVisible ? "opacity-100 translate-y-0 [clip-path:inset(0_0_0_0)]" : "opacity-0 translate-y-full [clip-path:inset(100%_0_0_0)]"
+                }`}>
+                  Turn raw plant data into
+                </span>
+              </span>
+              <span className="block overflow-hidden py-0.5">
+                <span className={`block transition-all duration-1000 delay-200 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-integra-orange ${
+                  heroVisible ? "opacity-100 translate-y-0 [clip-path:inset(0_0_0_0)]" : "opacity-0 translate-y-full [clip-path:inset(100%_0_0_0)]"
+                }`}>
+                  real-time intelligence
+                </span>
+              </span>
             </h1>
-            <p className="max-w-3xl text-base sm:text-lg leading-7 text-slate-300">{homeContent.hero.body}</p>
+
+            {/* STEP 3: Supporting paragraph */}
+            <p className={`max-w-3xl text-base sm:text-lg leading-7 text-slate-300 transition-all duration-700 delay-300 ${
+              heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}>
+              {homeContent.hero.body}
+            </p>
             
-            <div className="pt-2 flex flex-wrap gap-2.5">
+            {/* STEP 4: Technology chips with staggered arrival */}
+            <div className={`pt-2 flex flex-wrap gap-2.5 transition-all duration-700 delay-400 ${
+              heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}>
               {homeContent.hero.stats.map((tag) => (
-                <span key={tag} className="rounded-full border border-sky-400/20 bg-sky-500/10 px-4 py-2 font-mono text-xs font-semibold text-sky-300 backdrop-blur-md">
+                <span
+                  key={tag}
+                  className="rounded-full border border-sky-400/20 bg-sky-500/10 px-4 py-2 font-mono text-xs font-semibold text-sky-300 backdrop-blur-md hover:border-sky-400/50 hover:bg-sky-500/20 transition-all duration-300"
+                >
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-
-          {/* INTERACTIVE PURDUE MODEL ARCHITECTURE SELECTOR */}
-          <div className="panel bg-[#0e1726]/90 border border-white/15 p-6 text-white shadow-2xl backdrop-blur-md">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping" />
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">PURDUE MODEL ARCHITECTURE (ISA-95)</span>
-              </div>
-              <span className="font-mono text-[10px] text-sky-400 bg-sky-500/15 px-2.5 py-1 rounded-md border border-sky-400/30 font-semibold uppercase">
-                Interactive Map
-              </span>
-            </div>
-
-            {/* LEVEL SELECTOR BUTTONS */}
-            <div className="flex justify-between gap-1 mb-4 border-b border-white/10 pb-4">
-              {purdueLevels.map((lvl) => (
-                <button
-                  key={lvl.id}
-                  onClick={() => setActiveLevel(lvl.id)}
-                  className={`flex-1 py-2.5 px-1 rounded-xl font-mono text-[11px] font-bold transition-all duration-200 text-center ${
-                    activeLevel === lvl.id
-                      ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30 scale-105"
-                      : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
-                  }`}
-                >
-                  L{lvl.id}
-                </button>
-              ))}
-            </div>
-
-            {/* ACTIVE LEVEL DISPLAY CARD */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 transition-all duration-300">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-integra-orange">{purdueLevels[activeLevel].level}</span>
-                <span className="font-mono text-[10px] text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded font-semibold border border-sky-400/20">
-                  {purdueLevels[activeLevel].focus}
-                </span>
-              </div>
-              <h3 className="font-display text-lg font-bold text-white mb-2">{purdueLevels[activeLevel].name}</h3>
-              <div className="text-xs text-slate-300 leading-5">
-                <strong className="text-slate-200 font-mono text-[11px] block mb-1">Key Systems & Technologies:</strong>
-                {purdueLevels[activeLevel].tech}
-              </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-slate-400">
-              <span>Standard: ISA/IEC 62443 Security</span>
-              <span className="text-emerald-400 font-semibold">✓ Zero-Risk Integration</span>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* CONNECTED PIPELINE SECTION */}
+      {/* 6. CONNECTED PIPELINE SECTION — SEQUENTIAL DATA FLOW */}
       <DataFlow content={homeContent.dataFlow} />
 
-      {/* SERVICES OVERVIEW GRID (DARK GLASS CARDS) */}
+      {/* 7. SERVICES OVERVIEW GRID — VARIED DIRECTIONAL ENTRANCE */}
       <section className="section-space border-t border-white/10 bg-[#060c17]/60">
         <div className="shell">
           <SectionHeading
             eyebrow={homeContent.servicesIntro.eyebrow}
             title={homeContent.servicesIntro.title}
             body={homeContent.servicesIntro.body}
+            revealType="mask"
           />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {homeContent.services.map((service, idx) => (
-              <article key={service.title} className="panel group overflow-hidden flex flex-col justify-between border border-white/10 bg-[#0e1726]/80 hover:border-sky-500/40">
-                <div className="relative h-48 overflow-hidden">
-                  <img src={service.image} alt={service.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e1726] via-transparent to-transparent opacity-80" />
-                  <span className="absolute bottom-3 left-3 rounded-md bg-sky-500/20 border border-sky-400/30 px-2.5 py-1 font-mono text-[10px] font-bold text-sky-300 backdrop-blur-md uppercase tracking-wider">
-                    0{idx + 1} // {service.title.split(' ')[0]}
-                  </span>
-                </div>
-                <div className="space-y-3 p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-display text-lg font-bold text-white group-hover:text-sky-300 transition-colors duration-200">{service.title}</h3>
-                    <p className="mt-2 text-xs sm:text-sm leading-6 text-slate-300">{service.description}</p>
+          <div ref={servicesRef} className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {homeContent.services.map((service, idx) => {
+              // Varied entrance direction per card (Left, Bottom, Right, Bottom-Left)
+              const directions = [
+                "-translate-x-10 translate-y-0", // Card 1: from Left
+                "translate-y-12 translate-x-0",   // Card 2: from Bottom
+                "translate-x-10 translate-y-0",  // Card 3: from Right
+                "-translate-x-8 translate-y-8"   // Card 4: from Bottom-Left
+              ];
+              const cardMotion = directions[idx % directions.length];
+
+              return (
+                <article
+                  key={service.title}
+                  style={{ transitionDelay: `${idx * 110}ms` }}
+                  className={`panel group overflow-hidden flex flex-col justify-between border border-white/10 bg-[#0e1726]/80 hover:border-sky-500/40 transition-all duration-700 ${
+                    servicesVisible ? "opacity-100 translate-x-0 translate-y-0" : `opacity-0 ${cardMotion}`
+                  }`}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img src={service.image} alt={service.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e1726] via-transparent to-transparent opacity-80" />
+                    <span className="absolute bottom-3 left-3 rounded-md bg-sky-500/20 border border-sky-400/30 px-2.5 py-1 font-mono text-[10px] font-bold text-sky-300 backdrop-blur-md uppercase tracking-wider">
+                      0{idx + 1} // {service.title.split(' ')[0]}
+                    </span>
                   </div>
-                  
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-mono font-semibold text-sky-400 group-hover:text-sky-300">
-                    <span>Explore Service</span>
-                    <span>→</span>
+                  <div className="space-y-3 p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-display text-lg font-bold text-white group-hover:text-sky-300 transition-colors duration-200">{service.title}</h3>
+                      <p className="mt-2 text-xs sm:text-sm leading-6 text-slate-300">{service.description}</p>
+                    </div>
+                    
+                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-mono font-semibold text-sky-400 group-hover:text-sky-300">
+                      <span>Explore Service</span>
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* INDUSTRIES SPOTLIGHT (HIGH DENSITY PHOTOGRAPHIC CAROUSEL GRID) */}
+      {/* 11. INDUSTRIES SPOTLIGHT — ALTERNATING EDITORIAL REVEAL */}
       <section className="section-space border-y border-white/10 bg-[#060c17]">
         <div className="shell">
           <SectionHeading
             eyebrow={homeContent.industriesIntro.eyebrow}
             title={homeContent.industriesIntro.title}
             body={homeContent.industriesIntro.body}
+            revealType="horizontal"
           />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {homeContent.industries.map((industry) => {
+          <div ref={industriesRef} className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {homeContent.industries.map((industry, idx) => {
               const Tag = industry.href ? Link : "article";
+              // Alternating directional reveal (Left -> Right -> Left -> Right)
+              const altDirection = idx % 2 === 0 ? "-translate-x-8" : "translate-x-8";
+
               return (
                 <Tag
                   key={industry.title}
                   to={industry.href}
-                  className="panel group block overflow-hidden border border-white/10 bg-[#0e1726]/80 hover:border-sky-500/40"
+                  style={{ transitionDelay: `${idx * 120}ms` }}
+                  className={`panel group block overflow-hidden border border-white/10 bg-[#0e1726]/80 hover:border-sky-500/40 transition-all duration-700 ${
+                    industriesVisible ? "opacity-100 translate-x-0" : `opacity-0 ${altDirection}`
+                  }`}
                 >
                   <div className="relative h-44 overflow-hidden">
                     <img src={industry.image} alt={industry.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
@@ -165,11 +178,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* WHY PARTNER WITH US — CREATIVE SPLIT-SCREEN FEATURE SHOWCASE */}
+      {/* WHY PARTNER WITH US — CONVERGENCE MOVEMENT */}
       <section className="section-space border-t border-white/10 bg-[#060c17]/60">
         <div className="shell grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
           <div className="space-y-4">
-            <SectionHeading eyebrow={homeContent.whyPartner.eyebrow} title={homeContent.whyPartner.title} body={homeContent.whyPartner.body} />
+            <SectionHeading 
+              eyebrow={homeContent.whyPartner.eyebrow} 
+              title={homeContent.whyPartner.title} 
+              body={homeContent.whyPartner.body}
+              revealType="blur"
+            />
             
             <div className="pt-2 flex flex-wrap gap-3 font-mono text-xs font-bold">
               <span className="inline-flex items-center gap-2 rounded-xl bg-sky-500/10 border border-sky-400/30 px-3.5 py-2 text-sky-400">
@@ -183,7 +201,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div ref={partnerRef} className="grid gap-4 sm:grid-cols-2">
             {homeContent.whyPartner.items.map((item, idx) => {
               const icons = [
                 <path key="1" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.118a2 2 0 01-1.385-1.92V6.155a2 2 0 011.022-1.745l2.387-.796a6 6 0 013.86.517l.318.158a6 6 0 003.86.517l2.387-.796a2 2 0 012.387 1.92v7.039a2 2 0 01-1.022 1.745z" />,
@@ -193,7 +211,13 @@ export default function HomePage() {
               ];
 
               return (
-                <article key={item.title} className="panel group p-5 relative overflow-hidden border border-white/10 bg-[#0e1726] hover:border-sky-400/50 hover:bg-[#121e33] transition-all duration-300">
+                <article
+                  key={item.title}
+                  style={{ transitionDelay: `${idx * 100}ms` }}
+                  className={`panel group p-5 relative overflow-hidden border border-white/10 bg-[#0e1726] hover:border-sky-400/50 hover:bg-[#121e33] transition-all duration-700 ${
+                    partnerVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-95"
+                  }`}
+                >
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/30 transition-colors group-hover:bg-sky-500 group-hover:text-white">
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -207,6 +231,34 @@ export default function HomePage() {
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* 12. CTA / CONTACT SECTION — CINEMATIC FINAL REVEAL */}
+      <section ref={ctaRef} className="section-space border-t border-white/10 bg-[#060c17] text-white relative overflow-hidden">
+        <div className={`absolute inset-0 bg-[linear-gradient(135deg,rgba(14,165,233,0.15),transparent_60%)] transition-transform duration-1000 ${
+          ctaVisible ? "scale-100 opacity-100" : "scale-105 opacity-0"
+        }`} />
+        <div className="shell relative space-y-4 py-4">
+          <div className="overflow-hidden">
+            <h2 className={`font-display text-3xl font-bold tracking-tight transition-all duration-700 ${
+              ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}>
+              Bridge the Gap Between Plant Control & Enterprise Analytics
+            </h2>
+          </div>
+          <p className={`max-w-4xl text-sm sm:text-base leading-7 text-slate-300 transition-all duration-700 delay-150 ${
+            ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}>
+            Schedule an architectural review with our industrial IT-OT integration specialists to transform raw telemetry into high-value executive intelligence.
+          </p>
+          <div className={`pt-2 transition-all duration-700 delay-300 ${
+            ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}>
+            <Link to="/contact" className="action-link bg-sky-500 border-sky-400 text-white hover:bg-sky-400 hover:text-white shadow-lg shadow-sky-500/25">
+              Contact Engineering Team →
+            </Link>
           </div>
         </div>
       </section>

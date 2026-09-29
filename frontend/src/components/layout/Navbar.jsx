@@ -1,15 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { brand, navigation } from "../../data/siteContent";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08101d]/90 backdrop-blur-md shadow-2xl">
-      <div className="shell flex items-center justify-between gap-6 py-3.5">
+    <header className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+      scrolled 
+        ? "border-white/15 bg-[#08101d]/95 backdrop-blur-md shadow-2xl py-2.5" 
+        : "border-white/10 bg-[#08101d]/80 backdrop-blur-sm py-3.5"
+    }`}>
+      {/* Scroll Progress Line */}
+      <div 
+        className="scroll-progress-bar" 
+        style={{ width: `${scrollProgress}%` }} 
+      />
+
+      <div className="shell flex items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-3.5" onClick={() => setOpen(false)}>
-          <div className="bg-white/95 p-1.5 rounded-xl shadow-md flex items-center justify-center">
+          <div className="bg-white/95 p-1.5 rounded-xl shadow-md flex items-center justify-center transition-transform duration-300 hover:scale-105">
             <img src={brand.logo} alt={brand.logoAlt} className="h-10 sm:h-11 w-auto" />
           </div>
           <div className="hidden sm:block">

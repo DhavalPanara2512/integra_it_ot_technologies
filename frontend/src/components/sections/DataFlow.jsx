@@ -1,41 +1,83 @@
 import SectionHeading from "./SectionHeading";
+import useScrollReveal from "../../hooks/useScrollReveal";
 
 export default function DataFlow({ content }) {
+  const [containerRef, isVisible] = useScrollReveal({ threshold: 0.2 });
+
   return (
     <section className="section-space">
       <div className="shell">
-        <SectionHeading eyebrow={content.eyebrow} title={content.title} body={content.body} />
-        <div className="panel mt-10 overflow-hidden bg-[#0e1726]/90 text-white shadow-2xl border border-white/15 p-2 sm:p-4 relative">
-          {/* BACKGROUND ANIMATED STREAM GRAPH */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(14,165,233,0.08),transparent_50%)] pointer-events-none" />
+        <SectionHeading 
+          eyebrow={content.eyebrow} 
+          title={content.title} 
+          body={content.body} 
+          revealType="horizontal"
+        />
+        <div
+          ref={containerRef}
+          className={`panel mt-10 overflow-hidden bg-[#0e1726]/90 text-white shadow-2xl border border-white/15 p-3 sm:p-5 relative transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+        >
+          {/* Animated Background Pulse Graph */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(14,165,233,0.12),transparent_60%)] pointer-events-none" />
 
+          {/* Sequential Animated Connectors & Nodes */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 relative z-10">
-            {content.stages.map((stage, index) => (
-              <div key={stage.id} className="relative p-5 rounded-xl border border-white/5 bg-white/[0.03] transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-500/10 group flex flex-col justify-between">
-                {/* Connecting arrow indicator for desktop */}
-                {index < content.stages.length - 1 ? (
-                  <div className="absolute -right-3 top-1/2 hidden -translate-y-1/2 lg:flex items-center justify-center h-6 w-6 rounded-full bg-[#0e1726] border border-sky-400/40 text-sky-400 z-20 text-[10px] font-mono shadow-md">
-                    →
-                  </div>
-                ) : null}
+            {content.stages.map((stage, index) => {
+              const stepDelay = index * 200;
 
-                <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-sky-400/30 bg-sky-500/10 font-mono text-xs font-bold text-sky-400 transition-transform duration-300 group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white">
-                      {stage.id}
+              return (
+                <div
+                  key={stage.id}
+                  style={{ transitionDelay: `${stepDelay}ms` }}
+                  className={`relative p-5 rounded-xl border bg-white/[0.03] transition-all duration-700 group flex flex-col justify-between ${
+                    isVisible 
+                      ? "opacity-100 translate-y-0 border-white/10 hover:border-sky-500/50 hover:bg-sky-500/10" 
+                      : "opacity-0 translate-y-8 border-transparent"
+                  }`}
+                >
+                  {/* Connecting Animated Arrow Line Indicator */}
+                  {index < content.stages.length - 1 ? (
+                    <div 
+                      style={{ transitionDelay: `${stepDelay + 120}ms` }}
+                      className={`absolute -right-3.5 top-1/2 hidden -translate-y-1/2 lg:flex items-center justify-center h-6 w-6 rounded-full bg-[#0e1726] border text-sky-400 z-20 text-[10px] font-mono shadow-lg transition-all duration-500 ${
+                        isVisible ? "opacity-100 scale-100 border-sky-400/50" : "opacity-0 scale-50 border-white/10"
+                      }`}
+                    >
+                      →
                     </div>
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  </div>
-                  <h3 className="font-display text-base font-bold text-white group-hover:text-sky-300 transition-colors duration-200">{stage.title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-300">{stage.description}</p>
-                </div>
+                  ) : null}
 
-                <div className="mt-4 pt-3 border-t border-white/5 font-mono text-[10px] text-slate-400 flex items-center justify-between">
-                  <span>STAGE 0{stage.id}</span>
-                  <span className="text-sky-400 font-semibold uppercase">ACTIVE</span>
+                  <div>
+                    <div className="mb-3 flex items-center justify-between">
+                      <div 
+                        style={{ transitionDelay: `${stepDelay + 60}ms` }}
+                        className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border font-mono text-xs font-bold transition-all duration-500 ${
+                          isVisible 
+                            ? "bg-sky-500/20 text-sky-400 border-sky-400/40 group-hover:bg-sky-500 group-hover:text-white" 
+                            : "bg-white/5 text-slate-500 border-white/10"
+                        }`}
+                      >
+                        {stage.id}
+                      </div>
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
+                    <h3 className="font-display text-base font-bold text-white group-hover:text-sky-300 transition-colors duration-200">
+                      {stage.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-5 text-slate-300">
+                      {stage.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-white/5 font-mono text-[10px] text-slate-400 flex items-center justify-between">
+                    <span>STAGE 0{stage.id}</span>
+                    <span className="text-sky-400 font-semibold uppercase tracking-wider">ACTIVE PIPELINE</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

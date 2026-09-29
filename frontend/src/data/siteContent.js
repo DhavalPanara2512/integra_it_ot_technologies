@@ -251,12 +251,23 @@ export const aboutContent = {
   advantage: {
     eyebrow: "Why Partner With Us",
     title: "The Integra Advantage",
-    body: "We bring more than technical skills — we bring deep industry context and a commitment to long-term outcomes.",
     items: [
-      "Our engineers are specialists in industrial environments not generalists adapting IT practices.",
-      "Every project follows a structured change-management process no unplanned downtime, ever.",
-      "You get a named engineer, not a ticket queue direct access to the team that built your system.",
-      "Proactive health checks catch issues before they become incidents keeping your plant floor running.",
+      {
+        title: "OT-Focused Expertise",
+        description: "Our engineers are specialists in industrial environments not generalists adapting IT practices.",
+      },
+      {
+        title: "Zero-Risk Deployment",
+        description: "Every project follows a structured change-management process no unplanned downtime, ever.",
+      },
+      {
+        title: "Dedicated Account Team",
+        description: "You get a named engineer, not a ticket queue direct access to the team that built your system.",
+      },
+      {
+        title: "Real-Time Monitoring",
+        description: "Proactive health checks catch issues before they become incidents keeping your plant floor running.",
+      },
     ],
   },
   cta: {

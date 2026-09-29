@@ -95,4 +95,189 @@
   animation: flowPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* ==========================================================================
+   SMOOTH INDUSTRIAL REVEAL & STAGGER ANIMATIONS (ENTERPRISE FADE & SLIDE)
+   ========================================================================== */
+@keyframes revealFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes titleLineGlow {
+  0% {
+    width: 0%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   INDUSTRIAL SCROLL MOTION SYSTEM & TYPOGRAPHIC MASK REVEALS
+   ========================================================================== */
+
+/* Reduced Motion Override for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-reveal-up,
+  .animate-reveal-in,
+  .animate-mask-line,
+  .animate-mask-h,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-zoom-out,
+  .animate-bar-grow-1,
+  .animate-flow-pulse {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* Keyframe Animations with cubic-bezier(0.22, 1, 0.36, 1) */
+@keyframes maskRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes maskRevealHorizontal {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes slideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomOutReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes drawSvgLine {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Hero & Heading Masks */
+.mask-line-container {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.animate-mask-line {
+  animation: maskRevealUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-mask-h {
+  animation: maskRevealHorizontal 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: slideFromLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-slide-right {
+  animation: slideFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-zoom-out {
+  animation: zoomOutReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Stagger Delay Classes */
+.reveal-delay-1 { animation-delay: 80ms; }
+.reveal-delay-2 { animation-delay: 160ms; }
+.reveal-delay-3 { animation-delay: 240ms; }
+.reveal-delay-4 { animation-delay: 320ms; }
+.reveal-delay-5 { animation-delay: 400ms; }
+
+/* Micro-interaction & Performance Enhancements */
+.panel {
+  will-change: transform, opacity;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Scroll Progress Indicator Class */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #38bdf8, #f97316);
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+
+
 

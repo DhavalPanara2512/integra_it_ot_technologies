@@ -2,6 +2,7 @@ import { useState } from "react";
 import PageHero from "../components/sections/PageHero";
 import { contactContent } from "../data/siteContent";
 import { submitContactForm } from "../services/api";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 const initialForm = {
   name: "",
@@ -14,6 +15,8 @@ const initialForm = {
 export default function ContactPage() {
   const [form, setForm] = useState(initialForm);
   const [state, setState] = useState({ loading: false, error: "", success: "" });
+
+  const [contactRef, contactVisible] = useScrollReveal({ threshold: 0.1 });
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -33,8 +36,10 @@ export default function ContactPage() {
       <PageHero {...contactContent.hero} bgImage="/legacy-assets/images/company-bg.jpg" />
 
       <section className="section-space">
-        <div className="shell grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-          <div className="space-y-6">
+        <div ref={contactRef} className="shell grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+          <div className={`space-y-6 transition-all duration-800 ${
+            contactVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+          }`}>
             {contactContent.infoCards.map((item) => (
               <article key={item.title} className="panel p-6 border border-white/10 bg-[#0e1726]/80">
                 <div className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-sky-400">{item.title}</div>
@@ -51,13 +56,21 @@ export default function ContactPage() {
             <article className="panel bg-gradient-to-br from-[#0e1726] to-[#08101d] border border-white/15 p-6 text-white shadow-2xl">
               <div className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-integra-orange">{contactContent.brochure.title}</div>
               <p className="mt-3 text-xs sm:text-sm leading-6 text-slate-300">{contactContent.brochure.body}</p>
-              <a href={contactContent.brochure.href} className="action-link mt-5 border-white/15 bg-white/5 text-white hover:border-sky-400 hover:bg-sky-500/10 hover:text-sky-300">
+              <a 
+                href={contactContent.brochure.href} 
+                target="_blank" 
+                rel="noreferrer"
+                download="Integra-OT-Technologies-Brochure.pdf"
+                className="action-link mt-5 border-white/15 bg-white/5 text-white hover:border-sky-400 hover:bg-sky-500/10 hover:text-sky-300"
+              >
                 Download PDF
               </a>
             </article>
           </div>
 
-          <article className="panel p-6 sm:p-8 border border-white/15 bg-[#0e1726]/90 shadow-2xl backdrop-blur-md">
+          <article className={`panel p-6 sm:p-8 border border-white/15 bg-[#0e1726]/90 shadow-2xl backdrop-blur-md transition-all duration-800 delay-150 ${
+            contactVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+          }`}>
             <div className="space-y-3">
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">{contactContent.form.title}</h2>
               <p className="text-xs sm:text-sm leading-6 text-slate-300">{contactContent.form.subtitle}</p>

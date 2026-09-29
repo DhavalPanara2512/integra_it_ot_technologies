@@ -4,12 +4,15 @@ import SectionHeading from "../components/sections/SectionHeading";
 import { servicesContent, homeContent } from "../data/siteContent";
 import TimeSeriesVisualization from "../components/visualizations/TimeSeriesVisualization";
 import OTNetworkDiagram from "../components/visualizations/OTNetworkDiagram";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 export default function ServicesPage() {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const selectedService = servicesContent.services[activeIdx];
   const selectedImage = homeContent.services[activeIdx]?.image || "/legacy-assets/images/pi-system.jpg";
+
+  const [showcaseRef, showcaseVisible] = useScrollReveal({ threshold: 0.1 });
 
   return (
     <>
@@ -118,52 +121,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* THE INTEGRA ADVANTAGE — DARK CYBER SPLIT FEATURE GRID */}
-      <section className="section-space border-y border-white/10 bg-[#060c17]">
-        <div className="shell grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
-          <div className="space-y-4">
-            <span className="eyebrow">{servicesContent.advantage.eyebrow}</span>
-            <h2 className="section-title">{servicesContent.advantage.title}</h2>
-            <p className="section-copy">{servicesContent.advantage.body}</p>
-            
-            <div className="pt-3 flex flex-wrap gap-4">
-              <div className="inline-flex items-center gap-2 rounded-xl bg-sky-500/10 border border-sky-400/20 px-4 py-2.5 text-xs font-bold text-sky-400 font-mono">
-                <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping" />
-                Specialist Engineers
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-xl bg-amber-500/10 border border-amber-500/20 px-4 py-2.5 text-xs font-bold text-amber-400 font-mono">
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
-                Zero Unplanned Downtime
-              </div>
-            </div>
-          </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {servicesContent.advantage.items.map((item, idx) => {
-              const icons = [
-                <path key="1" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
-                <path key="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />,
-                <path key="3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />,
-                <path key="4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />,
-              ];
-
-              return (
-                <div key={item} className="group rounded-2xl border border-white/10 bg-[#0e1726]/80 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/40 hover:bg-[#0e1726]">
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/20 transition-colors group-hover:bg-sky-500 group-hover:text-white">
-                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        {icons[idx]}
-                      </svg>
-                    </div>
-                    <span className="font-mono text-xs font-bold text-slate-500">0{idx + 1}</span>
-                  </div>
-                  <p className="text-xs sm:text-sm leading-6 text-slate-300 group-hover:text-white transition-colors duration-200">{item}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* HOW WE DEPLOY SOLUTIONS — CONNECTED TIMELINE PIPELINE */}
       <section className="section-space">
