@@ -15,6 +15,10 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title=settings.app_name)
 
+@app.get("/")
+def root():
+    return {"message": "Integra IT-OT Technologies API is running"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
