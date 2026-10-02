@@ -12,3 +12,4 @@ backend/.mypy_cache/
 *.pyo
 *.sqlite3
 .DS_Store 
+backup/

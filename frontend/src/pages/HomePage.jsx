@@ -31,15 +31,15 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.25),transparent_60%),url('/legacy-assets/images/hero.png')] bg-cover bg-center opacity-30 mix-blend-luminosity transition-transform duration-1000 ease-out hover:scale-105" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#08101d]/80 via-transparent to-[#08101d]" />
 
-        <div ref={heroRef} className="shell py-16 sm:py-20 flex justify-start">
-          <div className="space-y-6 max-w-4xl text-left">
-            {/* STEP 1: Eyebrow with letter spacing transition */}
+        <div ref={heroRef} className="shell py-10 sm:py-16 md:py-20 flex justify-start">
+          <div className="space-y-4 sm:space-y-6 max-w-4xl text-left w-full">
+            {/* STEP 1: Eyebrow */}
             <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-              <span className="eyebrow tracking-[0.25em]">{homeContent.hero.eyebrow}</span>
+              <span className="eyebrow text-[10px] sm:text-[11px] tracking-[0.18em] sm:tracking-[0.25em]">{homeContent.hero.eyebrow}</span>
             </div>
 
-            {/* STEP 2: Line-by-line masked typography reveal */}
-            <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15] text-white">
+            {/* STEP 2: Fluid typography headline */}
+            <h1 className="font-display text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.2] sm:leading-[1.15] text-white">
               <span className="block overflow-hidden py-0.5">
                 <span className={`block transition-all duration-1000 delay-100 ${
                   heroVisible ? "opacity-100 translate-y-0 [clip-path:inset(0_0_0_0)]" : "opacity-0 translate-y-full [clip-path:inset(100%_0_0_0)]"
@@ -48,7 +48,7 @@ export default function HomePage() {
                 </span>
               </span>
               <span className="block overflow-hidden py-0.5">
-                <span className={`block transition-all duration-1000 delay-200 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-integra-orange ${
+                <span className={`block transition-all duration-1000 delay-200 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-300 to-integra-orange ${
                   heroVisible ? "opacity-100 translate-y-0 [clip-path:inset(0_0_0_0)]" : "opacity-0 translate-y-full [clip-path:inset(100%_0_0_0)]"
                 }`}>
                   real-time intelligence
@@ -57,20 +57,20 @@ export default function HomePage() {
             </h1>
 
             {/* STEP 3: Supporting paragraph */}
-            <p className={`max-w-3xl text-base sm:text-lg leading-7 text-slate-300 transition-all duration-700 delay-300 ${
+            <p className={`max-w-3xl text-sm sm:text-base md:text-lg leading-6 sm:leading-7 text-slate-300 transition-all duration-700 delay-300 ${
               heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}>
               {homeContent.hero.body}
             </p>
-            
-            {/* STEP 4: Technology chips with staggered arrival */}
-            <div className={`pt-2 flex flex-wrap gap-2.5 transition-all duration-700 delay-400 ${
+
+            {/* STEP 4: Responsive technology chips */}
+            <div className={`pt-2 flex flex-wrap gap-2 sm:gap-2.5 transition-all duration-700 delay-400 ${
               heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}>
               {homeContent.hero.stats.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-sky-400/20 bg-sky-500/10 px-4 py-2 font-mono text-xs font-semibold text-sky-300 backdrop-blur-md hover:border-sky-400/50 hover:bg-sky-500/20 transition-all duration-300"
+                  className="rounded-full border border-sky-400/20 bg-sky-500/10 px-3 sm:px-4 py-1.5 sm:py-2 font-mono text-[11px] sm:text-xs font-semibold text-sky-300 backdrop-blur-md transition-all duration-300 hover:border-sky-400/50 hover:bg-sky-500/20"
                 >
                   {tag}
                 </span>
@@ -80,14 +80,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. CONNECTED PIPELINE SECTION — SEQUENTIAL DATA FLOW */}
-      <DataFlow content={homeContent.dataFlow} />
-
       {/* 7. SERVICES OVERVIEW GRID — VARIED DIRECTIONAL ENTRANCE */}
       <section className="section-space border-t border-white/10 bg-[#060c17]/60">
         <div className="shell">
           <SectionHeading
-            eyebrow={homeContent.servicesIntro.eyebrow}
             title={homeContent.servicesIntro.title}
             body={homeContent.servicesIntro.body}
             revealType="mask"
@@ -122,11 +118,6 @@ export default function HomePage() {
                     <div>
                       <h3 className="font-display text-lg font-bold text-white group-hover:text-sky-300 transition-colors duration-200">{service.title}</h3>
                       <p className="mt-2 text-xs sm:text-sm leading-6 text-slate-300">{service.description}</p>
-                    </div>
-                    
-                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-mono font-semibold text-sky-400 group-hover:text-sky-300">
-                      <span>Explore Service</span>
-                      <span className="transition-transform group-hover:translate-x-1">→</span>
                     </div>
                   </div>
                 </article>
@@ -257,7 +248,7 @@ export default function HomePage() {
             ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}>
             <Link to="/contact" className="action-link bg-sky-500 border-sky-400 text-white hover:bg-sky-400 hover:text-white shadow-lg shadow-sky-500/25">
-              Contact Engineering Team →
+              Contact Our Team →
             </Link>
           </div>
         </div>

@@ -51,18 +51,8 @@ export default function IndustriesPage() {
                     </div>
                   </div>
 
-                  <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="p-5 flex-1 flex flex-col justify-between">
                     <p className="text-xs sm:text-sm leading-6 text-slate-300">{industry.description}</p>
-                    
-                    <div className="border-t border-white/10 pt-3.5">
-                      <div className="flex flex-wrap gap-1.5">
-                        {industry.tags.map((tag) => (
-                          <span key={tag} className="rounded-lg border border-sky-400/20 bg-sky-500/10 px-2.5 py-1 font-mono text-[10px] font-semibold text-sky-300 transition-colors group-hover:border-sky-400/40 group-hover:bg-sky-500/20">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </Tag>
               );

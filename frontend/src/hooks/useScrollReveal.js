@@ -5,7 +5,6 @@ export default function useScrollReveal(options = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("down");
 
-  // Allow once override, but default to false for bidirectional scroll up/down support
   const once = options.once ?? false;
 
   useEffect(() => {
@@ -18,6 +17,11 @@ export default function useScrollReveal(options = {}) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Lower threshold on mobile screens (<768px) to prevent elements from staying hidden
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const effectiveThreshold = isMobile ? Math.min(options.threshold || 0.1, 0.05) : (options.threshold || 0.12);
+    const effectiveRootMargin = isMobile ? "0px 0px 50px 0px" : (options.rootMargin || "0px 0px -40px 0px");
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -33,8 +37,8 @@ export default function useScrollReveal(options = {}) {
         }
       },
       {
-        threshold: options.threshold || 0.12,
-        rootMargin: options.rootMargin || "0px 0px -40px 0px",
+        threshold: effectiveThreshold,
+        rootMargin: effectiveRootMargin,
       }
     );
 

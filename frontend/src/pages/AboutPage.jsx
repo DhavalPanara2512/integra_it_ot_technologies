@@ -35,13 +35,6 @@ export default function AboutPage() {
             overviewVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
           }`}>
             <div>
-              <div className="mb-6 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-[0.2em] text-integra-orange border-b border-white/10 pb-4">
-                <span>Approved Focus Areas</span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-integra-orange/10 px-2.5 py-1 text-[10px] text-integra-orange font-mono border border-integra-orange/30">
-                  <span className="h-2 w-2 rounded-full bg-integra-orange animate-pulse" />
-                  Verified
-                </span>
-              </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {aboutContent.overview.cards.map((item, idx) => (
                   <div
@@ -74,49 +67,49 @@ export default function AboutPage() {
             revealType="horizontal"
           />
 
-          <div ref={missionRef} className="space-y-12 sm:space-y-16">
+          <div ref={missionRef} className="space-y-8 sm:space-y-12 lg:space-y-16">
             {aboutContent.missionVision.items.map((item, idx) => {
               const isMission = idx === 0; // Mission = row 0, Vision = row 1
 
               return (
                 <div
                   key={item.title}
-                  className="grid gap-8 lg:grid-cols-2 lg:items-center"
+                  className="grid gap-6 lg:gap-8 lg:grid-cols-2 lg:items-center"
                 >
                   {/* TEXT CONTENT COLUMN */}
                   <div
-                    className={`space-y-4 transition-all duration-1000 ease-out ${
+                    className={`space-y-3 sm:space-y-4 transition-all duration-1000 ease-out ${
                       isMission ? "lg:order-1" : "lg:order-2"
                     } ${
                       isMission
-                        ? missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 -translate-x-16 blur-sm"
-                        : missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-16 blur-sm"
+                        ? missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 -translate-x-6 sm:-translate-x-16 blur-sm"
+                        : missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-6 sm:translate-x-16 blur-sm"
                     }`}
                   >
-                    <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider text-sky-400">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-sky-400">
                       0{idx + 1} // {item.title}
                     </div>
-                    <h3 className={`font-display text-2xl sm:text-3xl font-bold ${
+                    <h3 className={`font-display text-xl sm:text-2xl lg:text-3xl font-bold ${
                       isMission ? "text-sky-300" : "text-amber-400"
                     }`}>
                       {item.title}
                     </h3>
-                    <p className="text-sm sm:text-base leading-7 text-slate-300">
+                    <p className="text-xs sm:text-sm lg:text-base leading-6 sm:leading-7 text-slate-300">
                       {item.description}
                     </p>
                   </div>
 
-                  {/* IMAGE COLUMN WITH STAGGERED OPPOSITE ENTRANCE */}
+                  {/* IMAGE COLUMN */}
                   <div
                     className={`panel overflow-hidden border border-white/15 bg-[#0e1726] shadow-2xl relative transition-all duration-1000 ease-out ${
                       isMission ? "lg:order-2" : "lg:order-1"
                     } ${
                       isMission
-                        ? missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-16 blur-sm"
-                        : missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 -translate-x-16 blur-sm"
+                        ? missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 translate-x-6 sm:translate-x-16 blur-sm"
+                        : missionVisible ? "opacity-100 translate-x-0 blur-0" : "opacity-0 -translate-x-6 sm:-translate-x-16 blur-sm"
                     }`}
                   >
-                    <div className="relative h-64 sm:h-80 overflow-hidden group">
+                    <div className="relative h-48 sm:h-64 lg:h-80 overflow-hidden group">
                       <img 
                         src={item.image} 
                         alt={item.title} 
@@ -124,7 +117,7 @@ export default function AboutPage() {
                         loading="lazy" 
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0e1726] via-[#0e1726]/20 to-transparent" />
-                      <span className="absolute bottom-4 left-4 rounded-md bg-sky-500/20 border border-sky-400/30 px-3 py-1 font-mono text-[10px] font-bold text-sky-300 backdrop-blur-md uppercase tracking-widest">
+                      <span className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 rounded-md bg-sky-500/20 border border-sky-400/30 px-2.5 py-1 font-mono text-[9px] sm:text-[10px] font-bold text-sky-300 backdrop-blur-md uppercase tracking-widest">
                         {item.title.toUpperCase()} ARCHITECTURE
                       </span>
                     </div>
@@ -186,17 +179,6 @@ export default function AboutPage() {
         <div className="shell grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:items-center">
           <div className="space-y-5">
             <SectionHeading eyebrow={aboutContent.advantage.eyebrow} title={aboutContent.advantage.title} body={aboutContent.advantage.body} revealType="mask" />
-            
-            <div className="pt-2 flex flex-wrap gap-3 font-mono text-xs font-bold">
-              <div className="inline-flex items-center gap-2 rounded-xl bg-sky-500/10 border border-sky-400/30 px-4 py-2.5 text-sky-400">
-                <span className="h-2 w-2 rounded-full bg-sky-400 animate-ping" />
-                Named Engineering Support
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-2.5 text-amber-400">
-                <span className="h-2 w-2 rounded-full bg-amber-400" />
-                Zero Unplanned Downtime
-              </div>
-            </div>
           </div>
 
           <div ref={advantageRef} className="grid gap-5 sm:grid-cols-2">
@@ -231,11 +213,6 @@ export default function AboutPage() {
                     <p className="text-xs sm:text-sm leading-6 text-slate-300 group-hover:text-slate-200 transition-colors duration-200">
                       {item.description}
                     </p>
-                  </div>
-                  
-                  <div className="mt-4 pt-3 border-t border-white/5 font-mono text-[10px] text-sky-400/70 group-hover:text-sky-300 flex items-center justify-between">
-                    <span>ADVANTAGE 0{idx + 1}</span>
-                    <span>✓ VERIFIED</span>
                   </div>
                 </div>
               );
